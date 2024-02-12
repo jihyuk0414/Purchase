@@ -8,6 +8,7 @@ class PurchaseApplicationTests {
 
 	@Test
 	void contextLoads() {
+		int load;
 	}
 
 }
