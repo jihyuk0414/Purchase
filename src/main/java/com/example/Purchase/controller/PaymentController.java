@@ -30,7 +30,7 @@ public class PaymentController {
         log.info("CALL OK");
 
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("apiSecret", "pyLsxsJMIPD35r97Ffg5hOLVH238vrxxtrzdmGjSCUZ1LZoAWvyOFKdE9DWe66Dd6E9JLCx6kb5xpHFT");
+        requestBody.put("apiSecret", "");
 
         return webClient.post()
                 .uri("/login/api-secret")
