@@ -19,47 +19,29 @@ import java.util.Map;
 @Slf4j
 public class PaymentController {
 
-    private final WebClient webClient;
+    private final WebClient webClient = WebClient.builder().baseUrl("https://api.portone.io").build();
 
-    public PaymentController(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://api.portone.io").build();
-    }
+    private final String mytoken = "";
+    //token을 받아오는 부를 새로 구현 필요합니다.
 
     @PostMapping("/payments/complete")
-    public Mono<ResponseEntity<?>> completePayment(@RequestBody ValidationRequest validation) {
-        log.info("CALL OK");
+    public Mono<ResponseEntity<PurChaseCheck>> completePayment(@RequestBody ValidationRequest validation) {
 
-        Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("apiSecret", "");
-
-        return webClient.post()
-                .uri("/login/api-secret")
-                .bodyValue(requestBody)
+        Mono<PurChaseCheck> monoResult = webClient
+                .get()
+                .uri("/payments/{paymentId}", validation.getPaymentId())
+                .header("Authorization", "Bearer " + mytoken)
                 .retrieve()
-                .bodyToMono(PortoneResponse.class)
-                .flatMap(portoneresponse -> {
-                    String mytoken = portoneresponse.getAccessToken();
-                    // 토큰 획득
-                    log.info("mytoken", mytoken);
+                .bodyToMono(PurChaseCheck.class);
 
-                    return webClient.get()
-                            .uri("/payments/{paymentId}", validation.getPaymentId())
-                            .header("Authorization", "Bearer " + mytoken)
-                            .retrieve()
-                            .bodyToMono(PurChaseCheck.class)
-                            .map(purchaseCheck -> {
-                                // 결제 금액 가져오기
-                                if (purchaseCheck.getAmount().equals(300)) {
-                                    return ResponseEntity.ok(purchaseCheck);
-                                    //원래는 이부분에서 엄청 많아야됨
-                                    //db랑 검사, 결제금ㅇ낵이랑 요청금액 검사, 등등
-                                    //그리고 이상하면, 여기서 취소 요청을 다시보내야함 !
-                                    //이게 spring이랑 분할했을때 좀 번거로움
-                                    // 근데 정책문제로 spring만으로 결제가 안될수도있음 .. 생가기필요
-                                } else {
-                                    return ResponseEntity.badRequest().build();
-                                }
-                            });
-                });
+        return monoResult.map(purchasecheckresponsewebclient -> {
+            if (purchasecheckresponsewebclient.getAmount().equals(300)) {
+                //여기서검증을더해야됩니다
+                return ResponseEntity.ok(purchasecheckresponsewebclient);
+            } else {
+                //안될시 응답도 정해야됩니다.
+                return ResponseEntity.badRequest().build();
+            }
+        });
     }
 }

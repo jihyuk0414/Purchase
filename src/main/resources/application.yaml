@@ -15,6 +15,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/purchasedb
+    url: jdbc:mysql://localhost:3306/purchasedb?allowPublicKeyRetrieval=true
     username: purchaseadmin
     password:
