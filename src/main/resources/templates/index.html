@@ -9,21 +9,13 @@
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 <button onclick="requestPayment()"> 구매하세요! </button>
 <script type="text/javascript">
-    function RandomPaymentId() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
-        for (let i = 0; i < 10; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return 'paymentId_' + result;
-    }
 
     const data = {
         storeId: 'store-8c143d19-2e6c-41e0-899d-8c3d02118d41',
         channelKey: 'channel-key-0c38a3bf-acf3-4b38-bf89-61fbbbecc8a8',
-        paymentId: RandomPaymentId(),
+        paymentId: `payment-${crypto.randomUUID()}`,
         orderName: '테스트물품1',
-        totalAmount: 300,
+        totalAmount: 20000,
         currency: 'CURRENCY_KRW',
         payMethod: 'EASY_PAY',
         isTestChannel: true
@@ -38,7 +30,7 @@
 
             const validation = await axios.post('http://localhost:7080/payments/complete', {
                 paymentId: response.paymentId,
-                totalAmount: 300
+                totalAmount: 20000
             });
             console.log(validation.data);
         } catch (error) {
@@ -46,6 +38,7 @@
         }
     }
 </script>
+
 
 </body>
 </html>
