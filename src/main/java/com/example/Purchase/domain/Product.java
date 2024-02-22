@@ -1,4 +1,4 @@
-package com.example.Purchase.dto;
+package com.example.Purchase.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -11,5 +11,9 @@ public class PurChaseCheck {
 
     String status;
 
+    String requestedAt;
+
     PaymentAmount amount;
+
+    String orderName ;
 }
