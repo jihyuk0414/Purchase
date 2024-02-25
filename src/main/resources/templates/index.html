@@ -14,16 +14,17 @@
         storeId: 'store-8c143d19-2e6c-41e0-899d-8c3d02118d41',
         channelKey: 'channel-key-0c38a3bf-acf3-4b38-bf89-61fbbbecc8a8',
         paymentId: `payment-${crypto.randomUUID()}`,
-        orderName: '햄버거',
-        totalAmount: 20000,
+        orderName: '햄버거',  <!-- 주문할 포인트 상품의 이름 -->
+        totalAmount: 20000,  <!-- 그 금액   --> <!-- 사용자 id도 보낼수있는진 확인 필요 -->
         currency: 'CURRENCY_KRW',
         payMethod: 'EASY_PAY',
         isTestChannel: true
-    };
+    }; <!-- 결제 요청 (front->결제서버 openapi request) -->
 
     async function requestPayment() {
         try {
             const response = await PortOne.requestPayment(data);
+            <!-- 결제서버 -> front response -->
             if (response.code != null) {
                 return alert(response.message);
             }
@@ -32,6 +33,7 @@
                 paymentId: response.paymentId,
                 totalAmount: 20000
             });
+            <!-- validation은, 검증 다 끝나고 나서 내가 purchascheck로 객체 전달 -->
             console.log(validation.data);
         } catch (error) {
             console.error(error);

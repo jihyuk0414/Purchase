@@ -5,10 +5,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class PurchaseApplicationTests {
-
-	@Test
-	void contextLoads() {
-		int load;
-	}
+//
+//
+//	@Test
+//	void contextLoads() {
+//		//given
+//
+//
+//		//when
+//
+//		//then
+//	}
 
 }

@@ -18,10 +18,6 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class PurchaseController {
 
-    private final ProductRepsitory productRepsitory;
-
-    private final PaymentService paymentService ;
-
     private final AccessTokenService accessTokenService ;
 
     private final ValidateService validateService;
@@ -38,8 +34,5 @@ public class PurchaseController {
                         }));
     }
 
-
-
-    //crud 권한 문제는 해결 확인
 
 }

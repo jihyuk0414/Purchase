@@ -17,8 +17,13 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
 
 
+    //결제정보 저장 service단 입니다.
+    //db와의 datetime type을 맞추어주었습니다.
     public void SavePaymentInfo(String paymentid, String status, String paytime, String ordername, int totalamount)
     {
+        if (paymentid == null || status == null || paytime == null || ordername == null) {
+            throw new IllegalArgumentException("Payment 정보에 null 값이 포함되어 있습니다.");
+        }
 
         OffsetDateTime offsetDateTime = OffsetDateTime.parse(paytime);
         Timestamp requestedAtTimestamp = Timestamp.from(offsetDateTime.toInstant());
@@ -26,9 +31,8 @@ public class PaymentService {
         Payment payment = new Payment(
                 paymentid,status,requestedAtTimestamp,ordername,totalamount ) ;
 
-        paymentRepository.save(payment) ;
 
-        log.info(status, ordername) ;
+        paymentRepository.save(payment) ;
 
 
     }
