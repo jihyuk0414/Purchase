@@ -1,8 +1,10 @@
 package com.example.Purchase.service;
 
+import com.example.Purchase.domain.Member;
 import com.example.Purchase.dto.CancelRequest;
 import com.example.Purchase.dto.CancelResponse;
 import com.example.Purchase.dto.PurChaseCheck;
+import com.example.Purchase.repository.MemberRepository;
 import com.example.Purchase.repository.ProductRepsitory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,11 +27,16 @@ public class PurchaseService {
 
     private final WebClient webClient = WebClient.builder().baseUrl("https://api.portone.io").build();
 
+    private final MemberRepository memberRepository;
 
-    public ResponseEntity<PurChaseCheck> validateandsave(PurChaseCheck purchasecheckbyportone, String paymentid, int uid) {
+
+    public ResponseEntity<PurChaseCheck> validateandsave(PurChaseCheck purchasecheckbyportone, String paymentid, String useremail) {
         if (purchasecheckbyportone.getAmount().getTotal() == 5000) {
             // 문제 없으면 확인합니다. (검증 기준은, db에서 값과 같은지 확인해야합니다)
             int nowamount = productRepsitory.minusOneAmount("product01");
+            Member member = memberRepository.findByUseremail(useremail);
+            int changeuid = member.getUid();
+            log.info("{}",changeuid);
             // 감소 이후, 주문 정보를 저장합니다.
             paymentService.SavePaymentInfo(
                     paymentid,
@@ -37,7 +44,7 @@ public class PurchaseService {
                     purchasecheckbyportone.getRequestedAt(),
                     purchasecheckbyportone.getOrderName(),
                     purchasecheckbyportone.getAmount().getTotal(),
-                    uid
+                    changeuid
             );
             return ResponseEntity.ok(purchasecheckbyportone);
         } else {

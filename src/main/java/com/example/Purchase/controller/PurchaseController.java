@@ -30,7 +30,7 @@ public class PurchaseController {
         return accessTokenService.GetToken()
                 .flatMap(token -> validateService.getpurchaseinfobyportone(validation.getPaymentId(), token)
                         .flatMap(purchasecheckresponsewebclient -> {
-                            return Mono.just(purchaseService.validateandsave(purchasecheckresponsewebclient,validation.getPaymentId(),validation.getUid()));
+                            return Mono.just(purchaseService.validateandsave(purchasecheckresponsewebclient,validation.getPaymentId(),validation.getUseremail()));
                         }));
     }
 

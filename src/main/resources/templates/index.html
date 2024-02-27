@@ -15,7 +15,7 @@
         channelKey: 'channel-key-0c38a3bf-acf3-4b38-bf89-61fbbbecc8a8',
         paymentId: `payment-${crypto.randomUUID()}`,
         orderName: '5000포인트',  <!-- 주문할 포인트 상품의 이름 -->
-        totalAmount: 5000,  <!-- 결제 금액, 5000 point가 아니라 5000원   -->
+        totalAmount: 5000,  <!-- 결제 금액, 5000 point가 아니라 5000원 - DB안보고 FRONT단에서 입력받게   -->
         currency: 'CURRENCY_KRW',
         payMethod: 'EASY_PAY',
         isTestChannel: true
@@ -31,8 +31,9 @@
 
             const validation = await axios.post('http://localhost:7080/payments/complete', {
                 paymentId: response.paymentId,
-                totalAmount: 5000, <!--여기도 클릭에따라 db에서보고 결제 금액 변경-->
-                uid : 2
+                totalAmount: 5000, <!--totalamount,useremail,pointname은 클릭에따라 db에서보고 결제 금액 변경-->
+                useremail:'user1@example.com',
+                pointname:'5000포인트'
 <!--                test를 위해 uid를 1로 한것입니다.-->
             });
             <!-- validation은, 검증 다 끝나고 나서 내가 purchascheck로 객체 전달 -->
