@@ -18,7 +18,6 @@ public class AccessTokenService {
 
     private final WebClient webClient = WebClient.builder().baseUrl("https://api.portone.io").build();
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     //portone에서 결제 조회를 하려면, portonetoken이 필요합니다. 해당 token을 가져오는부 입니다.
     //사이트 내부적으로 너무 빨리 갱신하여, 매번 가져오는 형태로 변경하였습니다.

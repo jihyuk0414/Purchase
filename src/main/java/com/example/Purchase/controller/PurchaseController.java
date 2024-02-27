@@ -2,7 +2,6 @@ package com.example.Purchase.controller;
 
 import com.example.Purchase.dto.PurChaseCheck;
 import com.example.Purchase.dto.ValidationRequest;
-import com.example.Purchase.repository.ProductRepsitory;
 import com.example.Purchase.service.AccessTokenService;
 import com.example.Purchase.service.PaymentService;
 import com.example.Purchase.service.PurchaseService;
@@ -30,7 +29,7 @@ public class PurchaseController {
         return accessTokenService.GetToken()
                 .flatMap(token -> validateService.getpurchaseinfobyportone(validation.getPaymentId(), token)
                         .flatMap(purchasecheckresponsewebclient -> {
-                            return Mono.just(purchaseService.validateandsave(purchasecheckresponsewebclient,validation.getPaymentId(),validation.getUseremail()));
+                            return Mono.just(purchaseService.validateandsave(purchasecheckresponsewebclient,validation.getPaymentId(),validation.getPointname(),validation.getUseremail()));
                         }));
     }
 

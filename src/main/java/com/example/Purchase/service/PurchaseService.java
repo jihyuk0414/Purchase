@@ -1,11 +1,12 @@
 package com.example.Purchase.service;
 
 import com.example.Purchase.domain.Member;
+import com.example.Purchase.domain.Point;
 import com.example.Purchase.dto.CancelRequest;
 import com.example.Purchase.dto.CancelResponse;
 import com.example.Purchase.dto.PurChaseCheck;
 import com.example.Purchase.repository.MemberRepository;
-import com.example.Purchase.repository.ProductRepsitory;
+import com.example.Purchase.repository.PointRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class PurchaseService {
 
-    private final ProductRepsitory productRepsitory;
+    private final PointRepository pointRepository;
 
     private final PaymentService paymentService;
 
@@ -30,10 +31,17 @@ public class PurchaseService {
     private final MemberRepository memberRepository;
 
 
-    public ResponseEntity<PurChaseCheck> validateandsave(PurChaseCheck purchasecheckbyportone, String paymentid, String useremail) {
-        if (purchasecheckbyportone.getAmount().getTotal() == 5000) {
+    public ResponseEntity<PurChaseCheck> validateandsave(PurChaseCheck purchasecheckbyportone, String paymentid,String pointname, String useremail) {
+
+        Point point = pointRepository.findByPointname(pointname) ;
+
+        int purchaseprice = point.getPointprice();
+
+        int pointamount = point.getPointamount();
+
+
+        if (purchasecheckbyportone.getAmount().getTotal() == purchaseprice) {
             // 문제 없으면 확인합니다. (검증 기준은, db에서 값과 같은지 확인해야합니다)
-            int nowamount = productRepsitory.minusOneAmount("product01");
             int changeuid = memberRepository.findByUseremail(useremail).getUid();
             // 감소 이후, 주문 정보를 저장합니다.
             paymentService.SavePaymentInfo(
@@ -41,7 +49,7 @@ public class PurchaseService {
                     purchasecheckbyportone.getStatus(),
                     purchasecheckbyportone.getRequestedAt(),
                     purchasecheckbyportone.getOrderName(),
-                    purchasecheckbyportone.getAmount().getTotal(),
+                    pointamount,
                     changeuid
             );
             int purchasemoney = purchasecheckbyportone.getAmount().getTotal();
