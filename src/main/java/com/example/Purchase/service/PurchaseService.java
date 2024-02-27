@@ -7,7 +7,6 @@ import com.example.Purchase.repository.ProductRepsitory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -27,8 +26,8 @@ public class PurchaseService {
     private final WebClient webClient = WebClient.builder().baseUrl("https://api.portone.io").build();
 
 
-    public ResponseEntity<PurChaseCheck> validateandsave(PurChaseCheck purchasecheckbyportone, String paymentid) {
-        if (purchasecheckbyportone.getAmount().getTotal() == 20000) {
+    public ResponseEntity<PurChaseCheck> validateandsave(PurChaseCheck purchasecheckbyportone, String paymentid, int uid) {
+        if (purchasecheckbyportone.getAmount().getTotal() == 5000) {
             // 문제 없으면 확인합니다. (검증 기준은, db에서 값과 같은지 확인해야합니다)
             int nowamount = productRepsitory.minusOneAmount("product01");
             // 감소 이후, 주문 정보를 저장합니다.
@@ -37,7 +36,8 @@ public class PurchaseService {
                     purchasecheckbyportone.getStatus(),
                     purchasecheckbyportone.getRequestedAt(),
                     purchasecheckbyportone.getOrderName(),
-                    purchasecheckbyportone.getAmount().getTotal()
+                    purchasecheckbyportone.getAmount().getTotal(),
+                    uid
             );
             return ResponseEntity.ok(purchasecheckbyportone);
         } else {

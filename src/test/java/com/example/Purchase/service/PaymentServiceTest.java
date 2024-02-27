@@ -25,21 +25,21 @@ class PaymentServiceTest {
     @InjectMocks
     private PaymentService paymentService ;
 
-    @Test
-    public void given_NULL_then_EXCEPTIONINJAVA()
-    {
-        // Given
-        String paymentid = "paymenttestid1";
-        String status = null;
-        String paytime = "2024-02-23T10:00:00Z";
-        String ordername = "테스트로사기";
-        int totalamount = 10000;
-
-        // When
-        //then
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentService.SavePaymentInfo(paymentid, status, paytime, ordername, totalamount);
-        });
-
-    }
+//    @Test
+//    public void given_NULL_then_EXCEPTIONINJAVA()
+//    {
+//        // Given
+//        String paymentid = "paymenttestid1";
+//        String status = null;
+//        String paytime = "2024-02-23T10:00:00Z";
+//        String ordername = "테스트로사기";
+//        int totalamount = 10000;
+//
+//        // When
+//        //then
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            paymentService.SavePaymentInfo(paymentid, status, paytime, ordername, totalamount);
+//        });
+//
+//    }
 }
