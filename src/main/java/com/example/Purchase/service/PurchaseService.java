@@ -34,9 +34,7 @@ public class PurchaseService {
         if (purchasecheckbyportone.getAmount().getTotal() == 5000) {
             // 문제 없으면 확인합니다. (검증 기준은, db에서 값과 같은지 확인해야합니다)
             int nowamount = productRepsitory.minusOneAmount("product01");
-            Member member = memberRepository.findByUseremail(useremail);
-            int changeuid = member.getUid();
-            log.info("{}",changeuid);
+            int changeuid = memberRepository.findByUseremail(useremail).getUid();
             // 감소 이후, 주문 정보를 저장합니다.
             paymentService.SavePaymentInfo(
                     paymentid,
@@ -46,6 +44,9 @@ public class PurchaseService {
                     purchasecheckbyportone.getAmount().getTotal(),
                     changeuid
             );
+            int purchasemoney = purchasecheckbyportone.getAmount().getTotal();
+
+            memberRepository.updatememberpointbyuid(purchasemoney,changeuid);
             return ResponseEntity.ok(purchasecheckbyportone);
         } else {
             //악의적 공격자였습니다. front단과, 결제 실 금액이 다릅니다.
