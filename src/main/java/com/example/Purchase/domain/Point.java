@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 public class Point {
 
     @Id
-    int pointid;
+    private int pointid;
 
-    String pointname;
+    private String pointname;
 
-    int pointprice;
+    private int pointprice;
 
-    int pointamount;
+    private int pointamount;
 
 }

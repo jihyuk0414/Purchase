@@ -15,37 +15,37 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PayNumber")
-    int PayNumber;
+    private int PayNumber;
 
     @Column(name = "PaymentID")
-    String PaymentID ; //결제 id
+    private String PaymentID ; //결제 id
 
     @Column(name = "status")
-    String status;
+    private String status;
 
     @Column(name = "paytime")
-    Timestamp paytime ;
+    private Timestamp paytime ;
     //결제 시간
 
     @Column(name = "totalamount")
-    int totalamount ;
+    private int totalamount ;
 
-    @Column(name = "pointname")
-    String ordername ;
+    @Column(name = "ordername")
+    private String ordername ;
     //구매한 point명
 
-    @Column(name = "uid")
-    int uid;
+    @Column(name = "memberid")
+    private Long memberid;
     //지금은 uid에 따라 입력하지만, uid를 노출하고 싶지 않으면 변경할수도있습니다.
 
 
 
-    public Payment(String paymentID, String status, Timestamp paytime, String ordername, int totalamount, int uid) {
+    public Payment(String paymentID, String status, Timestamp paytime, String ordername, int totalamount, Long memberid) {
         this.PaymentID = paymentID;
         this.status = status;
         this.paytime = paytime;
         this.ordername = ordername;
         this.totalamount = totalamount;
-        this.uid = uid;
+        this.memberid = memberid;
     }
 }

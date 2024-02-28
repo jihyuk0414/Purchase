@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface MemberRepository extends JpaRepository<Member, Integer> {
-    Member findByUseremail(String useremail);
+    Member findByEmail(String useremail);
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Member SET point = point+ :totalamount WHERE uid= :uid")
-    void updatememberpointbyuid(@Param("totalamount") int totalamount, @Param("uid") int uid);
+    @Query("UPDATE Member SET point = point+ :totalamount WHERE memberid= :memberid")
+    void updatememberpointbymemberid(@Param("totalamount") int totalamount, @Param("memberid") Long memberid);
 
 }

@@ -42,7 +42,7 @@ public class PurchaseService {
 
         if (purchasecheckbyportone.getAmount().getTotal() == purchaseprice) {
             // 문제 없으면 확인합니다. (검증 기준은, db에서 값과 같은지 확인해야합니다)
-            int changeuid = memberRepository.findByUseremail(useremail).getUid();
+            Long targetmemberid = memberRepository.findByEmail(useremail).getMemberid();
             // 감소 이후, 주문 정보를 저장합니다.
             paymentService.SavePaymentInfo(
                     paymentid,
@@ -50,11 +50,10 @@ public class PurchaseService {
                     purchasecheckbyportone.getRequestedAt(),
                     purchasecheckbyportone.getOrderName(),
                     pointamount,
-                    changeuid
+                    targetmemberid
             );
-            int purchasemoney = purchasecheckbyportone.getAmount().getTotal();
 
-            memberRepository.updatememberpointbyuid(purchasemoney,changeuid);
+            memberRepository.updatememberpointbymemberid(pointamount,targetmemberid);
             return ResponseEntity.ok(purchasecheckbyportone);
         } else {
             //악의적 공격자였습니다. front단과, 결제 실 금액이 다릅니다.

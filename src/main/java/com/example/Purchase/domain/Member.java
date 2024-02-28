@@ -16,21 +16,30 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int uid;
+    @Column(name = "memberid")
+    private Long memberid;
 
-    String useremail;
+    @Column(name = "email")
+    private String email;
 
-    String pw;
+    @Column(name = "password")
+    private String password;
 
-    String phonenumber;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    Date Birthday;
+    @Column(name = "birth")
+    private Date birth;
 
-    String username;
+    @Column(name = "name")
+    private String name;
 
-    String profileimage;
+    @Column(name = "profileimage")
+    private String profileImage;
 
-    int point;
+    @Column(name = "point")
+    private int point;
 
-    String nickname;
+    @Column(name = "nick_name")
+    private String nickName;
 }
