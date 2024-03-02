@@ -35,6 +35,7 @@ public class PurchaseService {
 
         Point point = pointRepository.findByPointname(pointname) ;
 
+
         int purchaseprice = point.getPointprice();
 
         int pointamount = point.getPointamount();
