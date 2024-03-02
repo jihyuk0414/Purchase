@@ -38,4 +38,4 @@ out/
 
 
 ### aspecttest ###
-com/example/Purchase/AspectTest.class
+!**/src/main/java/com/example/Purchase/AspectTest.class
