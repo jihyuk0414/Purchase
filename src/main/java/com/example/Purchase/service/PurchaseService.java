@@ -1,11 +1,9 @@
 package com.example.Purchase.service;
 
-import com.example.Purchase.domain.Member;
 import com.example.Purchase.domain.Point;
 import com.example.Purchase.dto.CancelRequest;
 import com.example.Purchase.dto.CancelResponse;
 import com.example.Purchase.dto.PurChaseCheck;
-import com.example.Purchase.repository.MemberRepository;
 import com.example.Purchase.repository.PointRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +26,9 @@ public class PurchaseService {
 
     private final WebClient webClient = WebClient.builder().baseUrl("https://api.portone.io").build();
 
-    private final MemberRepository memberRepository;
+    private final GetEmailService getEmailService;
+
+    private final ChangeEmailService changeEmailService;
 
 
     public ResponseEntity<PurChaseCheck> validateandsave(PurChaseCheck purchasecheckbyportone, String paymentid,String pointname, String useremail) {
@@ -43,8 +43,9 @@ public class PurchaseService {
 
         if (purchasecheckbyportone.getAmount().getTotal() == purchaseprice) {
             // 문제 없으면 확인합니다. (검증 기준은, db에서 값과 같은지 확인해야합니다)
-            Long targetmemberid = memberRepository.findByEmail(useremail).getMemberid();
+//            Long targetmemberid = getEmailService.getemail("받아온 jwt 정보") ;
             // 감소 이후, 주문 정보를 저장합니다.
+            Long targetmemberid = Long.valueOf("hello");
             paymentService.SavePaymentInfo(
                     paymentid,
                     purchasecheckbyportone.getStatus(),
@@ -54,7 +55,8 @@ public class PurchaseService {
                     targetmemberid
             );
 
-            memberRepository.updatememberpointbymemberid(pointamount,targetmemberid);
+
+//            changeEmailService.changeemail(pointchangeforamt);
             return ResponseEntity.ok(purchasecheckbyportone);
         } else {
             //악의적 공격자였습니다. front단과, 결제 실 금액이 다릅니다.
