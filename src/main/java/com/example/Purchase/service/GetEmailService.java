@@ -1,7 +1,6 @@
 package com.example.Purchase.service;
 
 
-import com.example.Purchase.dto.PurChaseCheck;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,14 +12,14 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class GetEmailService {
 
-    private final WebClient webClient = WebClient.builder().baseUrl("정지현").build();
+    private final WebClient webClient = WebClient.builder().baseUrl("").build();
     //지현이형에게 요청
 
     public Mono<String> getemail(String jwt)
     {
         return webClient.get()
-                .uri("지현이형uri")
-                .header(jwt)
+                .uri("http://localhost:8080/member/info")
+                .header("Authorization",  jwt)
                 .retrieve()
                 .bodyToMono(String.class) ;
     }

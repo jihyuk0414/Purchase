@@ -19,17 +19,15 @@ public class ChangeEmailService {
     private final WebClient webClient = WebClient.builder().baseUrl("").build();
     //지현이형에게 요청
 
-    public void changeemail(PointChangeFormat pointChangeFormat)
-    {
-        webClient
+    public Mono<Integer> changeemail(PointChangeFormat pointChangeFormat, String jwt) {
+        return webClient
                 .post()
-                .uri("/login/api-secret")
-                .header(pointChangeFormat.getJwt())
+                .uri("http://localhost:8080/member/point")
+                .header("Authorization",  jwt)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(pointChangeFormat))
                 .retrieve()
-                .bodyToMono(PointChangeFormat.class) ;
-
+                .bodyToMono(Integer.class)
+                .map(Integer::intValue);
     }
-
 }

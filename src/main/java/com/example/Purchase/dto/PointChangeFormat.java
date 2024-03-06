@@ -10,11 +10,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PointChangeFormat {
-
-    String jwt ;
-
     String email;
-
     int point;
 
+    // int 타입을 받는 생성자 추가
+    public PointChangeFormat(int point) {
+        this.point = point;
+    }
 }
+

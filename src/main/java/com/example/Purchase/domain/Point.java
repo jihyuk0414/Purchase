@@ -13,12 +13,16 @@ import lombok.NoArgsConstructor;
 public class Point {
 
     @Id
+    @Column(name = "point_id")
     private int pointid;
 
+    @Column(name = "point_name")
     private String pointname;
 
+    @Column(name = "point_price")
     private int pointprice;
 
+    @Column(name = "point_amount")
     private int pointamount;
 
 }
