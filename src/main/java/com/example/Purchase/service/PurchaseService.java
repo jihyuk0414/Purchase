@@ -49,11 +49,8 @@ public class PurchaseService {
                         targetmemberemail
                 ).flatMap(savedPayment-> {
                     PointChangeFormat pointChangeFormat = new PointChangeFormat(targetmemberemail, pointamount);
-                    log.info("email is {}", pointChangeFormat.getEmail()) ;
-                    log.info("point is {}", pointChangeFormat.getPoint());
                     return changeEmailService.changeemail(pointChangeFormat, jwt)
                             .map(response -> {
-                                log.info("returnpoint= {}", response);
                                 return ResponseEntity.ok(purchasecheckbyportone);
                             });
                 });
