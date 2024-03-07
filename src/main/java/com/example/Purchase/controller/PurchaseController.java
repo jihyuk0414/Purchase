@@ -24,12 +24,13 @@ public class PurchaseController {
     private final PurchaseService purchaseService;
 
 
+    @CrossOrigin
     @PostMapping("/payments/complete")
     public Mono<ResponseEntity<PurChaseCheck>> validatepayment(@RequestBody ValidationRequest validation) {
         return accessTokenService.GetToken()
                 .flatMap(token -> validateService.getpurchaseinfobyportone(validation.getPaymentId(), token)
                         .flatMap(purchasecheckresponsewebclient -> {
-                            return Mono.just(purchaseService.validateandsave(purchasecheckresponsewebclient,validation.getPaymentId(),validation.getPointname(),validation.getUseremail()));
+                          return purchaseService.validateandsave(purchasecheckresponsewebclient,validation.getPaymentId(),validation.getPointname(),validation.getJwt());
                         }));
     }
 

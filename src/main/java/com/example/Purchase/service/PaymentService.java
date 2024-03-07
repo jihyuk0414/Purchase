@@ -5,6 +5,7 @@ import com.example.Purchase.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
@@ -19,7 +20,7 @@ public class PaymentService {
 
     //결제정보 저장 service단 입니다.
     //db와의 datetime type을 맞추어주었습니다.
-    public void SavePaymentInfo(String paymentid, String status, String paytime, String ordername, int totalamount,Long memberid)
+    public Mono<Payment> SavePaymentInfo(String paymentid, String status, String paytime, String ordername, int totalamount, String memberid)
     {
         if (paymentid == null || status == null || paytime == null || ordername == null) {
             throw new IllegalArgumentException("Payment 정보에 null 값이 포함되어 있습니다.");
@@ -32,7 +33,9 @@ public class PaymentService {
                 new Payment(paymentid,status,requestedAtTimestamp,ordername,totalamount,memberid) ;
 
 
-        paymentRepository.save(payment) ;
+        return Mono.fromCallable(() -> {
+            return paymentRepository.save(payment);
+        });
 
 
     }

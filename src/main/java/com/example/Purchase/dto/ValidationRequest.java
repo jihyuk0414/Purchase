@@ -12,8 +12,9 @@ public class ValidationRequest {
     String paymentId;
     int totalAmount;
 
-    String useremail ;
     String pointname;
+
+    String jwt;
 
 
 
