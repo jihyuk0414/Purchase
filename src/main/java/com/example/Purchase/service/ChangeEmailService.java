@@ -19,7 +19,7 @@ public class ChangeEmailService {
     private final WebClient webClient = WebClient.builder().baseUrl("").build();
     //지현이형에게 요청
 
-    public Mono<Integer> changeemail(PointChangeFormat pointChangeFormat, String jwt) {
+    public Mono<String> changeemail(PointChangeFormat pointChangeFormat, String jwt) {
         return webClient
                 .post()
                 .uri("http://localhost:8080/member/point")
@@ -27,7 +27,6 @@ public class ChangeEmailService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(pointChangeFormat))
                 .retrieve()
-                .bodyToMono(Integer.class)
-                .map(Integer::intValue);
+                .bodyToMono(String.class);
     }
 }

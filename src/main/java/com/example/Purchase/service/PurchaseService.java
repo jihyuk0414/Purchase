@@ -38,6 +38,7 @@ public class PurchaseService {
         int pointamount = point.getPointamount();
 
         if (purchasecheckbyportone.getAmount().getTotal() == purchaseprice) {
+
             return getEmailService.getemail(jwt).flatMap(targetmemberemail -> {
                 return paymentService.SavePaymentInfo(
                         paymentid,
@@ -48,8 +49,8 @@ public class PurchaseService {
                         targetmemberemail
                 ).flatMap(savedPayment-> {
                     PointChangeFormat pointChangeFormat = new PointChangeFormat(targetmemberemail, pointamount);
-                    log.info("email은 {}", pointChangeFormat.getEmail()) ;
-                    log.info("포인트는 {}", pointChangeFormat.getPoint());
+                    log.info("email is {}", pointChangeFormat.getEmail()) ;
+                    log.info("point is {}", pointChangeFormat.getPoint());
                     return changeEmailService.changeemail(pointChangeFormat, jwt)
                             .map(response -> {
                                 log.info("returnpoint= {}", response);

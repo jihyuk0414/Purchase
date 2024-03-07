@@ -34,9 +34,5 @@ public class PurchaseController {
                         }));
     }
 
-    //이메일 받아오는 구조가 필요하고(get으로, token같이보내서)
-
-    //내가 보내야될 요청이 필요하고. (post로)
-
 
 }
