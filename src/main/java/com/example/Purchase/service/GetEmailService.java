@@ -19,6 +19,7 @@ public class GetEmailService {
     {
         return webClient.get()
                 .uri("http://localhost:8080/member/info")
+                //localhost부를 member container명으로 확인.
                 .header("Authorization",  jwt)
                 .retrieve()
                 .bodyToMono(String.class) ;

@@ -23,6 +23,7 @@ public class ChangeEmailService {
         return webClient
                 .post()
                 .uri("http://localhost:8080/member/point")
+                //localhost부를 member container명으로 확인.
                 .header("Authorization",  jwt)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromValue(pointChangeFormat))
