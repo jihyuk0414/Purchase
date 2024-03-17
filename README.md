@@ -6,4 +6,4 @@ PORTONE을 활용한 결제부입니다. DOCKER를 활용하여 로그인 회원
 
 실제 Frontend까지 고려된 결제 부는 
 https://github.com/stophyeon/Darakbang -> front_develop 브랜치 -> components->Purchases에 있지만 
-확인상의 편의를 위하여 purchase.html이라는 파일을 작성해 두었습니다.
+확인상의 편의를 위하여 purchase.js라는 파일을 작성해 두었습니다.
